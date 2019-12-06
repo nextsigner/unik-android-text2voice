@@ -15,22 +15,6 @@ ApplicationWindow{
         id:appSettings
         property int voice
     }
-    UnikQProcess{
-        id:uqp
-        onLogDataChanged: {
-            let m0 = logData.split('\n')
-            cbLm.append(cbLm.addItem('Voz por defecto'))
-            for(let i=0;i<m0.length-1;i++){
-                        console.log('uqp-: '+m0[i])
-                        cbLm.append(cbLm.addItem(m0[i]))
-            }
-            cbVoices.currentIndex=0
-            cbVoices.sayChanges=true
-        }
-        Component.onCompleted: {
-            run('ls /usr/share/festival/voices/ ')
-        }
-    }
     Item{
         id:xApp
         width:parent.width-48
@@ -39,48 +23,6 @@ ApplicationWindow{
         Column{
             anchors.centerIn: parent
             spacing: 24
-            Text{
-                text:'Voz Actual: '+(cbVoices.currentText===''?'Utilizando la voz por defecto del sistema':cbVoices.currentText)
-                font.pixelSize: 24
-                color: 'white'
-            }
-            Row{
-                spacing: app.fs
-                Text{
-                    id:labelSelVoice
-                    text:'Seleccionar una voz: '
-                    font.pixelSize: 24
-                    color: 'white'
-                }
-                ComboBox{
-                    id:cbVoices
-                    width: xApp.width-labelSelVoice.width//-app.fs
-                    font.pixelSize: app.fs
-                    model: cbLm
-                    property bool sayChanges: false
-                    onCurrentTextChanged: {
-                        if(!sayChanges)return
-                        let t
-                        if(cbVoices.currentText==='Voz por defecto'){
-                            t="Se utilizará la voz configurada por defecto en el sistema."
-                            unik.speak(t)
-                        }else{
-                            t=(cbVoices.currentText.indexOf('spanish')>=0?"La voz seleccionada es Español.":"The voice selected is "+cbVoices.currentText).replace(/\r/g, '')+""
-                            unik.speak(t,cbVoices.currentText)
-                        }
-                        textSpeaked.text=t
-                    }
-                    ListModel{
-                        id:cbLm
-                        function addItem(k, v){
-                            return{
-                                key: k,
-                                value: v
-                            }
-                        }
-                    }
-                }
-            }
             Text{
                 text:'Escribir un texto'
                 font.pixelSize: 24
@@ -93,11 +35,7 @@ ApplicationWindow{
                 onFocusChanged: if(focus)runVoice('Escribir aquí un texto y presionar la tecla Enter')
                 KeyNavigation.tab: btnSpeak
                 Keys.onReturnPressed: {
-                    if(cbVoices.currentText==='Voz por defecto'){
-                        unik.speak(ti.text)
-                    }else{
-                        unik.speak(ti.text,cbVoices.currentText)
-                    }
+                    unik.speak(ti.text)
                     textSpeaked.text=ti.text
                 }
                 Rectangle{
@@ -118,11 +56,7 @@ ApplicationWindow{
                 }
                 KeyNavigation.tab: row.children[0]
                 onClicked: {
-                    if(cbVoices.currentText==='Voz por defecto'){
-                        unik.speak(ti.text)
-                    }else{
-                        unik.speak(ti.text,cbVoices.currentText)
-                    }
+                    unik.speak(ti.text)
                     textSpeaked.text=ti.text
                 }
                 Rectangle{
@@ -209,12 +143,8 @@ ApplicationWindow{
         interval: 1500
         property string t: ''
         onTriggered: {
-            if(cbVoices.currentText==='Voz por defecto'){
-                unik.speak(t)
-            }else{
-                unik.speak(t,cbVoices.currentText)
-            }
-             textSpeaked.text=t
+            unik.speak(t)
+            textSpeaked.text=t
         }
     }
     function runVoice(t){
