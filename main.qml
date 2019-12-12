@@ -22,20 +22,20 @@ ApplicationWindow{
         anchors.centerIn: parent
         Column{
             anchors.centerIn: parent
-            spacing: 24
+            spacing: 8
             Text{
                 text:'Engines: '+ttsEngines
-                font.pixelSize: 24
+                font.pixelSize: 14
                 color: 'white'
             }
             Text{
                 text:'Engine Voices: '+ttsVoices
-                font.pixelSize: 24
+                font.pixelSize: 14
                 color: 'white'
             }
             Text{
                 text:'Engine Locales: '+ttsLocales
-                font.pixelSize: 24
+                font.pixelSize: 14
                 color: 'white'
             }
             Text{
