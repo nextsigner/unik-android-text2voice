@@ -143,7 +143,8 @@ ApplicationWindow{
         interval: 1500
         property string t: ''
         onTriggered: {
-            unik.speak(t)
+            tts.say(t)
+            //unik.speak(t)
             textSpeaked.text=t
         }
     }
