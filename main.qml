@@ -148,6 +148,9 @@ ApplicationWindow{
             textSpeaked.text=t
         }
     }
+    Component.onCompleted: {
+        console.log('TTS Engines for Android: '+ttsEngines)
+    }
     function runVoice(t){
         timerSpeak.t=t
         timerSpeak.restart()
