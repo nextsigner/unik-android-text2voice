@@ -24,6 +24,21 @@ ApplicationWindow{
             anchors.centerIn: parent
             spacing: 24
             Text{
+                text:'Engines: '+ttsEngines
+                font.pixelSize: 24
+                color: 'white'
+            }
+            Text{
+                text:'Engine Voices: '+ttsVoices
+                font.pixelSize: 24
+                color: 'white'
+            }
+            Text{
+                text:'Engine Locales: '+ttsLocales
+                font.pixelSize: 24
+                color: 'white'
+            }
+            Text{
                 text:'Escribir un texto'
                 font.pixelSize: 24
                 color: 'white'
@@ -150,8 +165,8 @@ ApplicationWindow{
     }
     Component.onCompleted: {
         console.log('TTS Engines for Android: '+ttsEngines)
-        console.log('TTS Engines Voices for Android: '+ttsVoices)
-        console.log('TTS Engines Locales for Android: '+ttsLocales)
+        console.log('TTS Engine Voices: '+ttsVoices)
+        console.log('TTS Engine Locales: '+ttsLocales)
     }
     function runVoice(t){
         timerSpeak.t=t
