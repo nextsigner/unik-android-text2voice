@@ -151,6 +151,7 @@ ApplicationWindow{
     Component.onCompleted: {
         console.log('TTS Engines for Android: '+ttsEngines)
         console.log('TTS Engines Voices for Android: '+ttsVoices)
+        console.log('TTS Engines Locales for Android: '+ttsLocales)
     }
     function runVoice(t){
         timerSpeak.t=t
