@@ -127,52 +127,52 @@ ApplicationWindow{
                 }
             }
 
-//            Row{
-//                anchors.horizontalCenter: parent.horizontalCenter
-//                Text{
-//                    id: labelCbLocales
-//                    text:'Lenguaje: '
-//                    font.pixelSize: app.fs
-//                    color: 'white'
-//                    anchors.verticalCenter: parent.verticalCenter
-//                }
-//                ComboBox{
-//                    id: cbLanguajes
-//                    width: xApp.width-labelCbLocales.width-48
-//                    font.pixelSize: app.fs
-//                    height: app.fs*3
-//                    model: (''+ttsLocales).split(',')
-//                    onCurrentIndexChanged: {
-//                        appSettings.voice= currentIndex
-//                        unik.ttsLanguageSelected(currentIndex)
-//                    }
-//                }
-//            }
-//            Text{
-//                text:'Escribir un texto'
-//                font.pixelSize: app.fs
-//                color: 'white'
-//            }
-//            TextField{
-//                id: ti
-//                font.pixelSize: app.fs
-//                width: xApp.width
-//                height: app.fs*2
-//                onFocusChanged: if(focus)runVoice('Escribir aquí un texto y presionar la tecla Enter')
-//                KeyNavigation.tab: btnSpeak
-//                Keys.onReturnPressed: {
-//                    unik.speak(ti.text)
-//                    textSpeaked.text=ti.text
-//                }
-//                Rectangle{
-//                    width: parent.width+app.fs*0.5
-//                    height: parent.height+app.fs*0.5
-//                    color: 'transparent'
-//                    border.width: parent.focus?app.fs*0.5:0
-//                    border.color: "#ff8833"
-//                    anchors.centerIn: parent
-//                }
-//            }
+            Row{
+                anchors.horizontalCenter: parent.horizontalCenter
+                Text{
+                    id: labelCbLocales
+                    text:'Lenguaje: '
+                    font.pixelSize: app.fs
+                    color: 'white'
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+                ComboBox{
+                    id: cbLanguajes
+                    width: xApp.width-labelCbLocales.width-48
+                    font.pixelSize: app.fs
+                    height: app.fs*3
+                    model: (''+ttsLocales).split(',')
+                    onCurrentIndexChanged: {
+                        appSettings.voice= currentIndex
+                        unik.ttsLanguageSelected(currentIndex)
+                    }
+                }
+            }
+            Text{
+                text:'Escribir un texto'
+                font.pixelSize: app.fs
+                color: 'white'
+            }
+            TextField{
+                id: ti
+                font.pixelSize: app.fs
+                width: xApp.width
+                height: app.fs*2
+                onFocusChanged: if(focus)runVoice('Escribir aquí un texto y presionar la tecla Enter')
+                KeyNavigation.tab: btnSpeak
+                Keys.onReturnPressed: {
+                    unik.speak(ti.text)
+                    textSpeaked.text=ti.text
+                }
+                Rectangle{
+                    width: parent.width+app.fs*0.5
+                    height: parent.height+app.fs*0.5
+                    color: 'transparent'
+                    border.width: parent.focus?app.fs*0.5:0
+                    border.color: "#ff8833"
+                    anchors.centerIn: parent
+                }
+            }
 //            Button{
 //                id:btnSpeak
 //                text: 'Hablar'
