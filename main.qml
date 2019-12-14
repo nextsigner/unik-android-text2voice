@@ -26,7 +26,7 @@ ApplicationWindow{
         width:parent.width-48
         height: parent.height
         anchors.centerIn: parent
-//        Column{
+       Column{
 //            anchors.centerIn: parent
 //            spacing: app.fs
 //            Text{
@@ -257,36 +257,36 @@ ApplicationWindow{
 //            }
 //        }
 //        Component.onCompleted: ti.focus=true
-//    }
+    }
 
 
-//    Shortcut{
-//        sequence: 'Esc'
-//        onActivated: Qt.quit()
-//    }
-//    Timer{
-//        id: timerSpeak
-//        running: false
-//        repeat: false
-//        interval: 1500
-//        property string t: ''
-//        onTriggered: {
-//            unik.speak(t)
-//            textSpeaked.text=t
-//        }
-//    }
-//    Component.onCompleted: {
-//        /*console.log('TTS Engines for Android: '+ttsEngines)
-//        console.log('TTS Engine Voices: '+ttsVoices)
-//        console.log('TTS Engine Locales: '+ttsLocales)
-//        //cbEngines.currentIndex = appSettings.engine
-//        cbLanguajes.currentIndex = appSettings.voice
-//        sbVolume.value = appSettings.volume
-//        sbRate.value = appSettings.rate
-//        sbPitch.value = appSettings.pitch*/
-//    }
-//    function runVoice(t){
-//        timerSpeak.t=t
-//        timerSpeak.restart()
-//    }
+    Shortcut{
+        sequence: 'Esc'
+        onActivated: Qt.quit()
+    }
+    Timer{
+        id: timerSpeak
+        running: false
+        repeat: false
+        interval: 1500
+        property string t: ''
+        onTriggered: {
+            unik.speak(t)
+            textSpeaked.text=t
+        }
+    }
+    Component.onCompleted: {
+        /*console.log('TTS Engines for Android: '+ttsEngines)
+        console.log('TTS Engine Voices: '+ttsVoices)
+        console.log('TTS Engine Locales: '+ttsLocales)
+        //cbEngines.currentIndex = appSettings.engine
+        cbLanguajes.currentIndex = appSettings.voice
+        sbVolume.value = appSettings.volume
+        sbRate.value = appSettings.rate
+        sbPitch.value = appSettings.pitch*/
+    }
+    function runVoice(t){
+        timerSpeak.t=t
+        timerSpeak.restart()
+    }
 }
