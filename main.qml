@@ -144,7 +144,7 @@ ApplicationWindow{
                     model: (''+ttsLocales).split(',')
                     onCurrentIndexChanged: {
                         appSettings.voice= currentIndex
-                        unik.ttsLanguageSelected(currentIndex)
+                        //unik.ttsLanguageSelected(currentIndex)
                     }
                 }
             }
