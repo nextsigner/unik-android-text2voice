@@ -58,74 +58,74 @@ ApplicationWindow{
                     }
                 }
             }
-//            Text{
-//                text:(ttsCurrentVoice!==''?'Voz Actual: '+ttsCurrentVoice:'Sin voces disponibles. ')+(ttsCurrentVoice!==''?' Voces Disponibles: '+ttsVoices:'')
-//                font.pixelSize: app.fs
-//                color: 'white'
-//            }
-//            Row{
-//                spacing: app.fs
-//                anchors.horizontalCenter: parent.horizontalCenter
-//                Text{
-//                    text:'Volume: '
-//                    font.pixelSize: app.fs
-//                    color: 'white'
-//                    anchors.verticalCenter: parent.verticalCenter
-//                }
-//                SpinBox{
-//                    id: sbVolume
-//                    from: 0
-//                    to:100
-//                    value: 0
-//                    font.pixelSize: app.fs
-//                    width: app.fs*10
-//                    height: app.fs*3
-//                    onValueChanged: {
-//                        unik.setTtsVolume(value)
-//                        appSettings.volume = value
-//                    }
-//                }
-//                Item{width: app.fs; height: 1}
-//                Text{
-//                    text:'Rate: '
-//                    font.pixelSize: app.fs
-//                    color: 'white'
-//                    anchors.verticalCenter: parent.verticalCenter
-//                }
-//                SpinBox{
-//                    id: sbRate
-//                    from: -10
-//                    to:10
-//                    value: 0
-//                    font.pixelSize: app.fs
-//                    width: app.fs*10
-//                    height: app.fs*3
-//                    onValueChanged: {
-//                        unik.setTtsRate(value)
-//                        appSettings.rate = value
-//                    }
-//                }
-//                Item{width: app.fs; height: 1}
-//                Text{
-//                    text:'Pitch: '
-//                    font.pixelSize: app.fs
-//                    color: 'white'
-//                    anchors.verticalCenter: parent.verticalCenter
-//                }
-//                SpinBox{
-//                    id: sbPitch
-//                    from: -10
-//                    to:10
-//                    value: 0
-//                    font.pixelSize: app.fs
-//                    width: app.fs*10
-//                    height: app.fs*3
-//                    onValueChanged: {
-//                        unik.setTtsPitch(value)
-//                        appSettings.pitch = value
-//                    }
-//                }
-//            }
+            Text{
+                text:(ttsCurrentVoice!==''?'Voz Actual: '+ttsCurrentVoice:'Sin voces disponibles. ')+(ttsCurrentVoice!==''?' Voces Disponibles: '+ttsVoices:'')
+                font.pixelSize: app.fs
+                color: 'white'
+            }
+            Row{
+                spacing: app.fs
+                anchors.horizontalCenter: parent.horizontalCenter
+                Text{
+                    text:'Volume: '
+                    font.pixelSize: app.fs
+                    color: 'white'
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+                SpinBox{
+                    id: sbVolume
+                    from: 0
+                    to:100
+                    value: 0
+                    font.pixelSize: app.fs
+                    width: app.fs*10
+                    height: app.fs*3
+                    onValueChanged: {
+                        unik.setTtsVolume(value)
+                        appSettings.volume = value
+                    }
+                }
+                Item{width: app.fs; height: 1}
+                Text{
+                    text:'Rate: '
+                    font.pixelSize: app.fs
+                    color: 'white'
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+                SpinBox{
+                    id: sbRate
+                    from: -10
+                    to:10
+                    value: 0
+                    font.pixelSize: app.fs
+                    width: app.fs*10
+                    height: app.fs*3
+                    onValueChanged: {
+                        unik.setTtsRate(value)
+                        appSettings.rate = value
+                    }
+                }
+                Item{width: app.fs; height: 1}
+                Text{
+                    text:'Pitch: '
+                    font.pixelSize: app.fs
+                    color: 'white'
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+                SpinBox{
+                    id: sbPitch
+                    from: -10
+                    to:10
+                    value: 0
+                    font.pixelSize: app.fs
+                    width: app.fs*10
+                    height: app.fs*3
+                    onValueChanged: {
+                        unik.setTtsPitch(value)
+                        appSettings.pitch = value
+                    }
+                }
+            }
 
 //            Row{
 //                anchors.horizontalCenter: parent.horizontalCenter
