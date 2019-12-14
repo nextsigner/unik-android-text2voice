@@ -35,12 +35,7 @@ ApplicationWindow{
                 color: 'white'
                 anchors.horizontalCenter: parent.horizontalCenter
             }
-            Item{width: 1; height: app.fs*2}
-            /*Text{
-                text:'Engines: '+ttsEngines
-                font.pixelSize: app.fs
-                color: 'white'
-            }*/
+            Item{width: 1; height: app.fs*2}            
             Row{
                 anchors.horizontalCenter: parent.horizontalCenter
                 Text{
@@ -281,14 +276,14 @@ ApplicationWindow{
         }
     }
     Component.onCompleted: {
-        console.log('TTS Engines for Android: '+ttsEngines)
+        /*console.log('TTS Engines for Android: '+ttsEngines)
         console.log('TTS Engine Voices: '+ttsVoices)
         console.log('TTS Engine Locales: '+ttsLocales)
         //cbEngines.currentIndex = appSettings.engine
         cbLanguajes.currentIndex = appSettings.voice
         sbVolume.value = appSettings.volume
         sbRate.value = appSettings.rate
-        sbPitch.value = appSettings.pitch
+        sbPitch.value = appSettings.pitch*/
     }
     function runVoice(t){
         timerSpeak.t=t
