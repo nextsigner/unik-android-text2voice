@@ -17,6 +17,7 @@ ApplicationWindow{
     Settings{
         id:appSettings
         category: 'UnikTtsExample'
+        property int engine
         property int voice
         property int volume
         property int rate
@@ -37,10 +38,31 @@ ApplicationWindow{
                 anchors.horizontalCenter: parent.horizontalCenter
             }
             Item{width: 1; height: app.fs*2}
-            Text{
+            /*Text{
                 text:'Engines: '+ttsEngines
                 font.pixelSize: app.fs
                 color: 'white'
+            }*/
+            Row{
+                anchors.horizontalCenter: parent.horizontalCenter
+                Text{
+                    id: labelCbEngines
+                    text:'Engines: '
+                    font.pixelSize: app.fs
+                    color: 'white'
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+                ComboBox{
+                    id: cbEngines
+                    width: xApp.width-labelCbEngines.width-48
+                    font.pixelSize: app.fs
+                    height: app.fs*3
+                    model: (''+ttsEngines).split(',')
+                    onCurrentIndexChanged: {
+                        appSettings.engine= currentIndex
+                        unik.ttsEngineSelected(currentIndex)
+                    }
+                }
             }
             Text{
                 text:(ttsCurrentVoice!==''?'Voz Actual: '+ttsCurrentVoice:'Sin voces disponibles. ')+(ttsCurrentVoice!==''?' Voces Disponibles: '+ttsVoices:'')
@@ -128,7 +150,7 @@ ApplicationWindow{
                     model: (''+ttsLocales).split(',')
                     onCurrentIndexChanged: {
                         appSettings.voice= currentIndex
-                        unik.languageSelected(currentIndex)
+                        unik.ttsLanguageSelected(currentIndex)
                     }
                 }
             }
@@ -264,11 +286,11 @@ ApplicationWindow{
         console.log('TTS Engines for Android: '+ttsEngines)
         console.log('TTS Engine Voices: '+ttsVoices)
         console.log('TTS Engine Locales: '+ttsLocales)
+        cbEngines.currentIndex = appSettings.engine
         cbLanguajes.currentIndex = appSettings.voice
         sbVolume.value = appSettings.volume
         sbRate.value = appSettings.rate
         sbPitch.value = appSettings.pitch
-        unik.setTtsVolume(0)
     }
     function runVoice(t){
         timerSpeak.t=t
