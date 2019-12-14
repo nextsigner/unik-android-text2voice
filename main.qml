@@ -58,7 +58,7 @@ ApplicationWindow{
                     model: (''+ttsEngines).split(',')
                     onCurrentIndexChanged: {
                         appSettings.engine= currentIndex
-                        unik.ttsEngineSelected(currentIndex)
+                        //unik.ttsEngineSelected(currentIndex)
                     }
                 }
             }
