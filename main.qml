@@ -3,15 +3,16 @@
     E-Mail: nextsigner@gmail.com
 */
 
-import QtQuick 2.0
+import QtQuick 2.12
 import QtQuick.Controls 2.0
 import Qt.labs.settings 1.0
 import unik.UnikQProcess 1.0
 ApplicationWindow{
     id:app
-    visible: true
-    visibility:"Maximized"
-    color: 'red'
+    visibility:"Windowed"//"Maximized"
+    width: 500
+    height: 800
+    color: '#333'
     property int fs: app.width*0.02
     Settings{
         id:appSettings
@@ -24,10 +25,10 @@ ApplicationWindow{
     }
     Item{
         id:xApp
-        width:parent.width-app.fs
+        width:parent.width-48
         height: parent.height
         anchors.centerIn: parent
-       Column{
+        Column{
             anchors.centerIn: parent
             spacing: app.fs
             Text{
@@ -37,6 +38,11 @@ ApplicationWindow{
                 anchors.horizontalCenter: parent.horizontalCenter
             }
             Item{width: 1; height: app.fs*2}
+            /*Text{
+                text:'Engines: '+ttsEngines
+                font.pixelSize: app.fs
+                color: 'white'
+            }*/
             Row{
                 anchors.horizontalCenter: parent.horizontalCenter
                 Text{
@@ -54,7 +60,7 @@ ApplicationWindow{
                     model: (''+ttsEngines).split(',')
                     onCurrentIndexChanged: {
                         appSettings.engine= currentIndex
-                        //unik.ttsEngineSelected(currentIndex)
+                        unik.ttsEngineSelected(currentIndex)
                     }
                 }
             }
@@ -173,98 +179,98 @@ ApplicationWindow{
                     anchors.centerIn: parent
                 }
             }
-//            Button{
-//                id:btnSpeak
-//                text: 'Hablar'
-//                font.pixelSize: app.fs
-//                width: app.fs*8
-//                height: app.fs*3
-//                onFocusChanged: {
-//                    if(focus&&ti.text!=='')runVoice('Hacer click en este boton para hablar')
-//                    if(focus&&ti.text==='')runVoice('El campo de texto esta vacio, ingrese un texto para poder convertirlo a voz.')
-//                }
-//                KeyNavigation.tab: row.children[0]
-//                onClicked: {
-//                    unik.speak(ti.text)
-//                    textSpeaked.text=ti.text
-//                }
-//                Rectangle{
-//                    width: parent.width+10
-//                    height: parent.height+10
-//                    color: 'transparent'
-//                    border.width: parent.focus?10:0
-//                    border.color: "#ff8833"
-//                    anchors.centerIn: parent
-//                }
-//            }
-//            Text{
-//                text:'Detectar elemento'
-//                font.pixelSize: app.fs
-//                color: 'white'
-//            }
-//            Row{
-//                id:row
-//                spacing: 10
-//                Repeater{
-//                    id:rep
-//                    model:['red', 'yellow', 'blue', 'brown', 'pink']
-//                    property var a: ['rojo', 'amarillo', 'azul', 'marron', 'rosado']
-//                    Rectangle{
-//                        width: app.fs*4
-//                        height: width
-//                        color: modelData
-//                        border.width: focus?app.fs*0.5:0
-//                        border.color: "#ff8833"
-//                        objectName: 'rect'+index
-//                        KeyNavigation.tab: index===3?row.children[5]: index===4?ti:row.children[index+1]
-//                        onFocusChanged: if(focus)runVoice('Sobre el color '+rep.a[index])
-//                        MouseArea{
-//                            anchors.fill: parent
-//                            hoverEnabled: true
-//                            onEntered: {
-//                                runVoice('Sobre el color '+rep.a[index])
-//                                parent.focus=true
-//                            }
-//                            onClicked: {
-//                                runVoice('Sobre el color '+rep.a[index])
-//                                parent.focus=true
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//            Item{
-//                width: 1
-//                height: app.fs*2
-//            }
-//            Text{
-//                text:'Último texto reproducido'
-//                font.pixelSize: app.fs
-//                color: 'white'
-//            }
-//            Rectangle{
-//                width: xApp.width
-//                height: xApp.height*0.3
-//                Text{
-//                    id: textSpeaked
-//                    font.pixelSize: app.fs
-//                    width: parent.width-app.fs
-//                    wrapMode: Text.WordWrap
-//                    anchors.top: parent.top
-//                    anchors.topMargin: app.fs
-//                    anchors.left: parent.left
-//                    anchors.leftMargin: app.fs
-//                }
-//            }
+            Button{
+                id:btnSpeak
+                text: 'Hablar'
+                font.pixelSize: app.fs
+                width: app.fs*8
+                height: app.fs*3
+                onFocusChanged: {
+                    if(focus&&ti.text!=='')runVoice('Hacer click en este boton para hablar')
+                    if(focus&&ti.text==='')runVoice('El campo de texto esta vacio, ingrese un texto para poder convertirlo a voz.')
+                }
+                KeyNavigation.tab: row.children[0]
+                onClicked: {
+                    unik.speak(ti.text)
+                    textSpeaked.text=ti.text
+                }
+                Rectangle{
+                    width: parent.width+10
+                    height: parent.height+10
+                    color: 'transparent'
+                    border.width: parent.focus?10:0
+                    border.color: "#ff8833"
+                    anchors.centerIn: parent
+                }
+            }
+            Text{
+                text:'Detectar elemento'
+                font.pixelSize: app.fs
+                color: 'white'
+            }
+            Row{
+                id:row
+                spacing: 10
+                Repeater{
+                    id:rep
+                    model:['red', 'yellow', 'blue', 'brown', 'pink']
+                    property var a: ['rojo', 'amarillo', 'azul', 'marron', 'rosado']
+                    Rectangle{
+                        width: app.fs*4
+                        height: width
+                        color: modelData
+                        border.width: focus?app.fs*0.5:0
+                        border.color: "#ff8833"
+                        objectName: 'rect'+index
+                        KeyNavigation.tab: index===3?row.children[5]: index===4?ti:row.children[index+1]
+                        onFocusChanged: if(focus)runVoice('Sobre el color '+rep.a[index])
+                        MouseArea{
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            onEntered: {
+                                runVoice('Sobre el color '+rep.a[index])
+                                parent.focus=true
+                            }
+                            onClicked: {
+                                runVoice('Sobre el color '+rep.a[index])
+                                parent.focus=true
+                            }
+                        }
+                    }
+                }
+            }
+            Item{
+                width: 1
+                height: app.fs*2
+            }
+            Text{
+                text:'Último texto reproducido'
+                font.pixelSize: app.fs
+                color: 'white'
+            }
+            Rectangle{
+                width: xApp.width
+                height: xApp.height*0.3
+                Text{
+                    id: textSpeaked
+                    font.pixelSize: app.fs
+                    width: parent.width-app.fs
+                    wrapMode: Text.WordWrap
+                    anchors.top: parent.top
+                    anchors.topMargin: app.fs
+                    anchors.left: parent.left
+                    anchors.leftMargin: app.fs
+                }
+            }
         }
-        //Component.onCompleted: ti.focus=true
+        Component.onCompleted: ti.focus=true
     }
 
 
-    /*Shortcut{
+    Shortcut{
         sequence: 'Esc'
         onActivated: Qt.quit()
-    }*/
+    }
     Timer{
         id: timerSpeak
         running: false
@@ -277,14 +283,14 @@ ApplicationWindow{
         }
     }
     Component.onCompleted: {
-        /*console.log('TTS Engines for Android: '+ttsEngines)
+        console.log('TTS Engines for Android: '+ttsEngines)
         console.log('TTS Engine Voices: '+ttsVoices)
         console.log('TTS Engine Locales: '+ttsLocales)
-        //cbEngines.currentIndex = appSettings.engine
+        cbEngines.currentIndex = appSettings.engine
         cbLanguajes.currentIndex = appSettings.voice
         sbVolume.value = appSettings.volume
         sbRate.value = appSettings.rate
-        sbPitch.value = appSettings.pitch*/
+        sbPitch.value = appSettings.pitch
     }
     function runVoice(t){
         timerSpeak.t=t
