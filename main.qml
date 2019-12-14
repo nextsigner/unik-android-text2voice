@@ -9,9 +9,7 @@ import Qt.labs.settings 1.0
 import unik.UnikQProcess 1.0
 ApplicationWindow{
     id:app
-    visibility:"Windowed"//"Maximized"
-    width: 500
-    height: 800
+    visibility:"Maximized"
     color: '#333'
     property int fs: app.width*0.02
     Settings{
@@ -286,7 +284,7 @@ ApplicationWindow{
         console.log('TTS Engines for Android: '+ttsEngines)
         console.log('TTS Engine Voices: '+ttsVoices)
         console.log('TTS Engine Locales: '+ttsLocales)
-        cbEngines.currentIndex = appSettings.engine
+        //cbEngines.currentIndex = appSettings.engine
         cbLanguajes.currentIndex = appSettings.voice
         sbVolume.value = appSettings.volume
         sbRate.value = appSettings.rate
