@@ -27,36 +27,36 @@ ApplicationWindow{
         height: parent.height
         anchors.centerIn: parent
        Column{
-//            anchors.centerIn: parent
-//            spacing: app.fs
-//            Text{
-//                text:'<b>Unik Android Text2Voice Example</b>'
-//                font.pixelSize: app.fs*2
-//                color: 'white'
-//                anchors.horizontalCenter: parent.horizontalCenter
-//            }
-//            Item{width: 1; height: app.fs*2}
-//            Row{
-//                anchors.horizontalCenter: parent.horizontalCenter
-//                Text{
-//                    id: labelCbEngines
-//                    text:'Engines: '
-//                    font.pixelSize: app.fs
-//                    color: 'white'
-//                    anchors.verticalCenter: parent.verticalCenter
-//                }
-//                ComboBox{
-//                    id: cbEngines
-//                    width: xApp.width-labelCbEngines.width-48
-//                    font.pixelSize: app.fs
-//                    height: app.fs*3
-//                    model: (''+ttsEngines).split(',')
-//                    onCurrentIndexChanged: {
-//                        appSettings.engine= currentIndex
-//                        //unik.ttsEngineSelected(currentIndex)
-//                    }
-//                }
-//            }
+            anchors.centerIn: parent
+            spacing: app.fs
+            Text{
+                text:'<b>Unik Android Text2Voice Example</b>'
+                font.pixelSize: app.fs*2
+                color: 'white'
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+            Item{width: 1; height: app.fs*2}
+            Row{
+                anchors.horizontalCenter: parent.horizontalCenter
+                Text{
+                    id: labelCbEngines
+                    text:'Engines: '
+                    font.pixelSize: app.fs
+                    color: 'white'
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+                ComboBox{
+                    id: cbEngines
+                    width: xApp.width-labelCbEngines.width-48
+                    font.pixelSize: app.fs
+                    height: app.fs*3
+                    model: (''+ttsEngines).split(',')
+                    onCurrentIndexChanged: {
+                        appSettings.engine= currentIndex
+                        //unik.ttsEngineSelected(currentIndex)
+                    }
+                }
+            }
 //            Text{
 //                text:(ttsCurrentVoice!==''?'Voz Actual: '+ttsCurrentVoice:'Sin voces disponibles. ')+(ttsCurrentVoice!==''?' Voces Disponibles: '+ttsVoices:'')
 //                font.pixelSize: app.fs
