@@ -3,8 +3,8 @@
     E-Mail: nextsigner@gmail.com
 */
 
-import QtQuick 2.12
-import QtQuick.Controls 2.12
+import QtQuick 2.0
+import QtQuick.Controls 2.0
 import Qt.labs.settings 1.0
 import unik.UnikQProcess 1.0
 ApplicationWindow{
@@ -256,15 +256,15 @@ ApplicationWindow{
 //                    anchors.leftMargin: app.fs
 //                }
 //            }
-//        }
-//        Component.onCompleted: ti.focus=true
+        }
+        //Component.onCompleted: ti.focus=true
     }
 
 
-    Shortcut{
+    /*Shortcut{
         sequence: 'Esc'
         onActivated: Qt.quit()
-    }
+    }*/
     Timer{
         id: timerSpeak
         running: false
