@@ -4,13 +4,14 @@
 */
 
 import QtQuick 2.12
-import QtQuick.Controls 2.0
+import QtQuick.Controls 2.12
 import Qt.labs.settings 1.0
 import unik.UnikQProcess 1.0
 ApplicationWindow{
     id:app
+    visible: true
     visibility:"Maximized"
-    color: '#333'
+    color: 'red'
     property int fs: app.width*0.02
     Settings{
         id:appSettings
@@ -23,7 +24,7 @@ ApplicationWindow{
     }
     Item{
         id:xApp
-        width:parent.width-48
+        width:parent.width-app.fs
         height: parent.height
         anchors.centerIn: parent
        Column{
