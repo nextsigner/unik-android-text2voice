@@ -23,6 +23,21 @@ ApplicationWindow{
         property int rate
         property int pitch
     }
+    Connections{
+        target: unik
+        onTtsSpeakingChanged: {
+            btnSpeakStop.enabled = false
+            if(unik.ttsSpeaking===0){
+                btnSpeakStop.enabled = false
+            }else if(unik.ttsSpeaking===1){
+                btnSpeakStop.enabled = true
+            }else if(unik.ttsSpeaking===2){
+                btnSpeakStop.enabled = true
+            }else{
+                btnSpeakStop.enabled = false
+            }
+        }
+    }
     Item{
         id:xApp
         width:parent.width-48
@@ -179,30 +194,64 @@ ApplicationWindow{
                     anchors.centerIn: parent
                 }
             }
-            Button{
-                id:btnSpeak
-                text: 'Hablar'
-                font.pixelSize: app.fs
-                width: app.fs*8
-                height: app.fs*3
-                onFocusChanged: {
-                    if(focus&&ti.text!=='')runVoice('Hacer click en este boton para hablar')
-                    if(focus&&ti.text==='')runVoice('El campo de texto esta vacio, ingrese un texto para poder convertirlo a voz.')
+            Row{
+                spacing: app.fs
+                Button{
+                    id:btnSpeak
+                    text: 'Hablar'
+                    font.pixelSize: app.fs
+                    width: app.fs*8
+                    height: app.fs*3
+                    onFocusChanged: {
+                        if(focus&&ti.text!=='')runVoice('Hacer click en este boton para hablar')
+                        if(focus&&ti.text==='')runVoice('El campo de texto esta vacio, ingrese un texto para poder convertirlo a voz.')
+                    }
+                    KeyNavigation.tab: btnSpeakStop
+                    onClicked: {
+                        unik.speak(ti.text)
+                        textSpeaked.text=ti.text
+                    }
+                    Rectangle{
+                        width: parent.width+10
+                        height: parent.height+10
+                        color: 'transparent'
+                        border.width: parent.focus?10:0
+                        border.color: "#ff8833"
+                        anchors.centerIn: parent
+                    }
+                    Rectangle{
+                        width: parent.width+app.fs*0.25
+                        height: parent.height+app.fs*0.25
+                        color: 'transparent'
+                        border.width: parent.focus?app.fs*0.25:0
+                        border.color: "#ff8833"
+                        anchors.centerIn: parent
+                    }
                 }
-                KeyNavigation.tab: row.children[0]
-                onClicked: {
-                    unik.speak(ti.text)
-                    textSpeaked.text=ti.text
-                }
-                Rectangle{
-                    width: parent.width+10
-                    height: parent.height+10
-                    color: 'transparent'
-                    border.width: parent.focus?10:0
-                    border.color: "#ff8833"
-                    anchors.centerIn: parent
+                Button{
+                    id:btnSpeakStop
+                    enabled: false
+                    text: 'Detener'
+                    font.pixelSize: app.fs
+                    width: app.fs*8
+                    height: app.fs*3
+                    KeyNavigation.tab: row.children[0]
+                    onClicked: {
+                        unik.ttsSpeakStop()
+                        enabled = false
+                        textSpeaked.text=ti.text
+                    }
+                    Rectangle{
+                        width: parent.width+app.fs*0.25
+                        height: parent.height+app.fs*0.25
+                        color: 'transparent'
+                        border.width: parent.focus?app.fs*0.25:0
+                        border.color: "#ff8833"
+                        anchors.centerIn: parent
+                    }
                 }
             }
+
             Text{
                 text:'Detectar elemento'
                 font.pixelSize: app.fs
