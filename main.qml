@@ -52,25 +52,23 @@ ApplicationWindow{
     Item{
         id:xApp
         width: app.width-app.fs
-        height: app.height-app.fs
-        anchors.centerIn: parent
+        height: app.height-app.fs-app.fs*0.5
+        x:app.fs*0.5
+        y:app.fs*0.5
         Flickable{
             id:flick1
-            //anchors.fill: parent
-            width: parent.width-ScrollBar.width
-            height: parent.height
-            contentWidth: col1.width
+            anchors.fill: parent
+            contentWidth: parent.width
             contentHeight: col1.height
             boundsBehavior: Flickable.StopAtBounds
             ScrollBar.vertical: ScrollBar { }
-            ScrollBar.background: Rectangle{color: 'red'}
             Column{
                 id: col1
-                anchors.centerIn: parent
                 spacing: app.fs
+                anchors.horizontalCenter: parent.horizontalCenter
                 Text{
                     text:'<b>Unik Android Text2Voice Example</b>'
-                    font.pixelSize: app.fs*1.2
+                    font.pixelSize: app.fs*1.4
                     color: 'white'
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
@@ -205,19 +203,18 @@ ApplicationWindow{
                 TextField{
                     id: ti
                     font.pixelSize: app.fs
-                    width: xApp.width
+                    width: xApp.width-app.fs*2
                     height: app.fs*2
-                    onFocusChanged: if(focus && !unik.isTtsSpeaking())runVoice('Escribir aquí un texto y presionar la tecla Enter')
+                    onFocusChanged: if(focus && !unik.isTtsSpeaking())speak('Escribir aquí un texto y presionar la tecla Enter')
                     KeyNavigation.tab: btnSpeak
                     Keys.onReturnPressed: {
-                        unik.speak(ti.text)
-                        textSpeaked.text=ti.text
+                        speak(ti.text)
                     }
                     Rectangle{
                         width: parent.width+app.fs*0.25
                         height: parent.height+app.fs*0.25
                         color: 'transparent'
-                        border.width: parent.focus?app.fs*0.5:0
+                        border.width: parent.focus?app.fs*0.25:0
                         border.color: "#ff8833"
                         anchors.centerIn: parent
                     }
@@ -231,18 +228,17 @@ ApplicationWindow{
                         width: app.fs*8
                         height: app.fs*3
                         onFocusChanged: {
-                            if(focus&&ti.text!==''&&!unik.isTtsSpeaking()&&!unik.isTtsPaused())runVoice('Hacer click en este boton para hablar')
-                            if(focus&&ti.text===''&&!unik.isTtsSpeaking()&&!unik.isTtsPaused())runVoice('El campo de texto esta vacio, ingrese un texto para poder convertirlo a voz.')
+                            timerSpeak.stop()
+                            if(focus&&ti.text!==''&&!unik.isTtsSpeaking()&&!unik.isTtsPaused())speak('Hacer click en este boton para hablar')
+                            if(focus&&ti.text===''&&!unik.isTtsSpeaking()&&!unik.isTtsPaused())speak('El campo de texto esta vacio, ingrese un texto para poder convertirlo a voz.')
                         }
                         KeyNavigation.tab: btnSpeakStop
                         onClicked: {
                             if(ti.text!==''){
-                                unik.speak(ti.text)
+                                speak(ti.text)
                             }else{
-                                unik.speak('El campo de texto esta vacio, ingrese un texto para poder convertirlo a voz.')
+                                speak('El campo de texto esta vacio, ingrese un texto para poder convertirlo a voz.')
                             }
-
-                            textSpeaked.text=ti.text
                         }
                         Rectangle{
                             width: parent.width+app.fs*0.25
@@ -313,6 +309,7 @@ ApplicationWindow{
                 Row{
                     id:row
                     spacing: 10
+                    anchors.horizontalCenter: parent.horizontalCenter
                     Repeater{
                         id:rep
                         model:['red', 'yellow', 'blue', 'brown', 'pink']
@@ -325,16 +322,16 @@ ApplicationWindow{
                             border.color: "#ff8833"
                             objectName: 'rect'+index
                             KeyNavigation.tab: index===3?row.children[5]: index===4?ti:row.children[index+1]
-                            onFocusChanged: if(focus && !unik.isTtsSpeaking())runVoice('Sobre el color '+rep.a[index])
+                            onFocusChanged: if(focus && !unik.isTtsSpeaking())speak('Sobre el color '+rep.a[index])
                             MouseArea{
                                 anchors.fill: parent
                                 hoverEnabled: true
                                 onEntered: {
-                                    runVoice('Sobre el color '+rep.a[index])
+                                    speak('Sobre el color '+rep.a[index])
                                     parent.focus=true
                                 }
                                 onClicked: {
-                                    runVoice('Sobre el color '+rep.a[index])
+                                    speak('Sobre el color '+rep.a[index])
                                     parent.focus=true
                                 }
                             }
@@ -351,8 +348,9 @@ ApplicationWindow{
                     color: 'white'
                 }
                 Rectangle{
-                    width: xApp.width
+                    width: xApp.width-app.fs*2
                     height: xApp.height*0.3
+                    anchors.horizontalCenter: parent.horizontalCenter
                     Text{
                         id: textSpeaked
                         font.pixelSize: app.fs
@@ -373,17 +371,6 @@ ApplicationWindow{
         sequence: 'Esc'
         onActivated: Qt.quit()
     }
-    Timer{
-        id: timerSpeak
-        running: false
-        repeat: false
-        interval: 1500
-        property string t: ''
-        onTriggered: {
-            unik.speak(t)
-            textSpeaked.text=t
-        }
-    }
     Component.onCompleted: {
         console.log('TTS Engines for Android: '+ttsEngines)
         console.log('TTS Engine Voices: '+ttsVoices)
@@ -394,8 +381,8 @@ ApplicationWindow{
         sbRate.value = appSettings.rate
         sbPitch.value = appSettings.pitch
     }
-    function runVoice(t){
-        timerSpeak.t=t
-        timerSpeak.restart()
+    function speak(t){
+        textSpeaked.text=t
+        unik.speak(t)
     }
 }
