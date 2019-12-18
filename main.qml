@@ -11,10 +11,10 @@ import unik.UnikQProcess 1.0
 ApplicationWindow{
     id:app
     visibility:Qt.platform.os==='android'?"FullScreen":"Windowed"
-    width: Qt.platform.os==='android'?Screen.width:700
+    width: Qt.platform.os==='android'?Screen.width:500
     height: Qt.platform.os==='android'?Screen.height:900
     color: '#333'
-    property int fs: app.width*0.02
+    property int fs: Qt.platform.os==='android'?app.width*0.04:app.width*0.03
     Settings{
         id:appSettings
         category: 'UnikTtsExample'
@@ -27,30 +27,41 @@ ApplicationWindow{
     Connections{
         target: unik
         onTtsSpeakingChanged: {
-            btnSpeakStop.enabled = false
-            if(unik.ttsSpeaking===0){
+            if(unik.ttsSpeaking===1){ //Playing
+                btnSpeakStop.enabled = true
+                btnSpeakPauseResume.enabled = true
+                btnSpeakPauseResume.text = 'Pausar'
+            }else if(unik.ttsSpeaking===2){ //Pausing
+               btnSpeakStop.enabled = false
+                btnSpeakPauseResume.enabled = true
+                btnSpeakPauseResume.text = 'Continuar'
+                 //app.color='red'
+            }else if(unik.ttsSpeaking===0){ //Stoping
                 btnSpeakStop.enabled = false
                 btnSpeakPauseResume.enabled = false
-            }else if(unik.ttsSpeaking===1){
+                btnSpeakPauseResume.text = 'Pausar'
+                //app.color='red'
+            }else{
+                btnSpeakPauseResume.enabled = true
                 btnSpeakStop.enabled = true
                 btnSpeakPauseResume.text = 'Pausar'
-                btnSpeakPauseResume.enabled = true
-            }else if(unik.ttsSpeaking===2){
-                btnSpeakStop.enabled = true
-                btnSpeakPauseResume.text = 'Continuar'
-                btnSpeakPauseResume.enabled = true
-            }else{
-                btnSpeakStop.enabled = false
-                btnSpeakPauseResume.enabled = false
             }
         }
     }
+
     Item{
         id:xApp
-        width:parent.width-48
-        height: parent.height
+        width: app.width-app.fs
+        height: app.height-app.fs
         anchors.centerIn: parent
+        Flickable{
+        id:flick1
+        anchors.fill: parent
+        contentWidth: col1.width
+        contentHeight: col1.height
         Column{
+            id: col1
+
             anchors.centerIn: parent
             spacing: app.fs
             Text{
@@ -91,70 +102,81 @@ ApplicationWindow{
                 font.pixelSize: app.fs
                 color: 'white'
             }
-            Row{
+            Column{
                 spacing: app.fs
                 anchors.horizontalCenter: parent.horizontalCenter
-                Text{
-                    text:'Volume: '
-                    font.pixelSize: app.fs
-                    color: 'white'
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-                SpinBox{
-                    id: sbVolume
-                    from: 0
-                    to:100
-                    value: 0
-                    font.pixelSize: app.fs
-                    width: app.fs*10
-                    height: app.fs*3
-                    onValueChanged: {
-                        unik.setTtsVolume(value)
-                        appSettings.volume = value
+                Row{
+                    spacing: app.fs
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    Text{
+                        text:'Volume: '
+                        font.pixelSize: app.fs
+                        color: 'white'
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+                    SpinBox{
+                        id: sbVolume
+                        from: 0
+                        to:100
+                        value: 0
+                        font.pixelSize: app.fs
+                        width: app.fs*10
+                        height: app.fs*3
+                        onValueChanged: {
+                            unik.setTtsVolume(value)
+                            appSettings.volume = value
+                        }
                     }
                 }
                 Item{width: app.fs; height: 1}
-                Text{
-                    text:'Rate: '
-                    font.pixelSize: app.fs
-                    color: 'white'
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-                SpinBox{
-                    id: sbRate
-                    from: -10
-                    to:10
-                    value: 0
-                    font.pixelSize: app.fs
-                    width: app.fs*10
-                    height: app.fs*3
-                    onValueChanged: {
-                        unik.setTtsRate(value)
-                        appSettings.rate = value
+                Row{
+                    spacing: app.fs
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    Text{
+                        text:'Rate: '
+                        font.pixelSize: app.fs
+                        color: 'white'
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+                    SpinBox{
+                        id: sbRate
+                        from: -10
+                        to:10
+                        value: 0
+                        font.pixelSize: app.fs
+                        width: app.fs*10
+                        height: app.fs*3
+                        onValueChanged: {
+                            unik.setTtsRate(value)
+                            appSettings.rate = value
+                        }
                     }
                 }
                 Item{width: app.fs; height: 1}
-                Text{
-                    text:'Pitch: '
-                    font.pixelSize: app.fs
-                    color: 'white'
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-                SpinBox{
-                    id: sbPitch
-                    from: -10
-                    to:10
-                    value: 0
-                    font.pixelSize: app.fs
-                    width: app.fs*10
-                    height: app.fs*3
-                    onValueChanged: {
-                        unik.setTtsPitch(value)
-                        appSettings.pitch = value
+                Row{
+                    spacing: app.fs
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    Text{
+                        text:'Pitch: '
+                        font.pixelSize: app.fs
+                        color: 'white'
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+                    SpinBox{
+                        id: sbPitch
+                        from: -10
+                        to:10
+                        value: 0
+                        font.pixelSize: app.fs
+                        width: app.fs*10
+                        height: app.fs*3
+                        onValueChanged: {
+                            unik.setTtsPitch(value)
+                            appSettings.pitch = value
+                        }
                     }
                 }
             }
-
             Row{
                 anchors.horizontalCenter: parent.horizontalCenter
                 Text{
@@ -186,7 +208,7 @@ ApplicationWindow{
                 font.pixelSize: app.fs
                 width: xApp.width
                 height: app.fs*2
-                onFocusChanged: if(focus && !unik.isTssSpeaking())runVoice('Escribir aquí un texto y presionar la tecla Enter')
+                onFocusChanged: if(focus && !unik.isTtsSpeaking())runVoice('Escribir aquí un texto y presionar la tecla Enter')
                 KeyNavigation.tab: btnSpeak
                 Keys.onReturnPressed: {
                     unik.speak(ti.text)
@@ -210,21 +232,18 @@ ApplicationWindow{
                     width: app.fs*8
                     height: app.fs*3
                     onFocusChanged: {
-                        if(focus&&ti.text!=='')runVoice('Hacer click en este boton para hablar')
-                        if(focus&&ti.text==='')runVoice('El campo de texto esta vacio, ingrese un texto para poder convertirlo a voz.')
+                        if(focus&&ti.text!==''&&!unik.isTtsSpeaking()&&!unik.isTtsPaused())runVoice('Hacer click en este boton para hablar')
+                        if(focus&&ti.text===''&&!unik.isTtsSpeaking()&&!unik.isTtsPaused())runVoice('El campo de texto esta vacio, ingrese un texto para poder convertirlo a voz.')
                     }
                     KeyNavigation.tab: btnSpeakStop
                     onClicked: {
-                        unik.speak(ti.text)
+                        if(ti.text!==''){
+                            unik.speak(ti.text)
+                        }else{
+                            unik.speak('El campo de texto esta vacio, ingrese un texto para poder convertirlo a voz.')
+                        }
+
                         textSpeaked.text=ti.text
-                    }
-                    Rectangle{
-                        width: parent.width+10
-                        height: parent.height+10
-                        color: 'transparent'
-                        border.width: parent.focus?10:0
-                        border.color: "#ff8833"
-                        anchors.centerIn: parent
                     }
                     Rectangle{
                         width: parent.width+app.fs*0.25
@@ -238,18 +257,23 @@ ApplicationWindow{
                 Button{
                     id:btnSpeakPauseResume
                     enabled: false
+                    visible: Qt.platform.os!='linux'
                     text: 'Pausar'
                     font.pixelSize: app.fs
                     width: app.fs*8
                     height: app.fs*3
                     KeyNavigation.tab: row.children[0]
                     onClicked: {
-                        if(text==='Pausar'){
+                        console.log('isTtsSpeaking(): '+unik.isTtsSpeaking())
+                        if(unik.isTtsPaused()){
+                            textSpeaked.text='<b>Continua: </b>'+ti.text
                             unik.ttsResume()
                         }else{
-                            unik.ttsPause()
+                            textSpeaked.text='<b>Pausado: </b>'+ti.text
+                            if(unik.isTtsSpeaking()){
+                                unik.ttsPause()
+                            }
                         }
-                        textSpeaked.text=ti.text
                     }
                     Rectangle{
                         width: parent.width+app.fs*0.25
@@ -304,7 +328,7 @@ ApplicationWindow{
                         border.color: "#ff8833"
                         objectName: 'rect'+index
                         KeyNavigation.tab: index===3?row.children[5]: index===4?ti:row.children[index+1]
-                        onFocusChanged: if(focus && !unik.isTssSpeaking())runVoice('Sobre el color '+rep.a[index])
+                        onFocusChanged: if(focus && !unik.isTtsSpeaking())runVoice('Sobre el color '+rep.a[index])
                         MouseArea{
                             anchors.fill: parent
                             hoverEnabled: true
@@ -346,7 +370,7 @@ ApplicationWindow{
         }
         Component.onCompleted: ti.focus=true
     }
-
+    }
 
     Shortcut{
         sequence: 'Esc'
