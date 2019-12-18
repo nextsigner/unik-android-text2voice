@@ -32,10 +32,10 @@ ApplicationWindow{
                 btnSpeakPauseResume.enabled = true
                 btnSpeakPauseResume.text = 'Pausar'
             }else if(unik.ttsSpeaking===2){ //Pausing
-               btnSpeakStop.enabled = false
+                btnSpeakStop.enabled = false
                 btnSpeakPauseResume.enabled = true
                 btnSpeakPauseResume.text = 'Continuar'
-                 //app.color='red'
+                //app.color='red'
             }else if(unik.ttsSpeaking===0){ //Stoping
                 btnSpeakStop.enabled = false
                 btnSpeakPauseResume.enabled = false
@@ -55,321 +55,318 @@ ApplicationWindow{
         height: app.height-app.fs
         anchors.centerIn: parent
         Flickable{
-        id:flick1
-        anchors.fill: parent
-        contentWidth: col1.width
-        contentHeight: col1.height
-        Column{
-            id: col1
-
-            anchors.centerIn: parent
-            spacing: app.fs
-            Text{
-                text:'<b>Unik Android Text2Voice Example</b>'
-                font.pixelSize: app.fs*1.2
-                color: 'white'
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
-            Item{width: 1; height: app.fs*2}
-            /*Text{
-                text:'Engines: '+ttsEngines
-                font.pixelSize: app.fs
-                color: 'white'
-            }*/
-            Row{
-                anchors.horizontalCenter: parent.horizontalCenter
-                Text{
-                    id: labelCbEngines
-                    text:'Engines: '
-                    font.pixelSize: app.fs
-                    color: 'white'
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-                ComboBox{
-                    id: cbEngines
-                    width: xApp.width-labelCbEngines.width-48
-                    font.pixelSize: app.fs
-                    height: app.fs*3
-                    model: (''+ttsEngines).split(',')
-                    onCurrentIndexChanged: {
-                        appSettings.engine= currentIndex
-                        unik.ttsEngineSelected(currentIndex)
-                    }
-                }
-            }
-            Text{
-                text:(ttsCurrentVoice!==''?'Voz Actual: '+ttsCurrentVoice:'Sin voces disponibles. ')+(ttsCurrentVoice!==''?' Voces Disponibles: '+ttsVoices:'')
-                font.pixelSize: app.fs
-                color: 'white'
-            }
+            id:flick1
+            //anchors.fill: parent
+            width: parent.width-ScrollBar.width
+            height: parent.height
+            contentWidth: col1.width
+            contentHeight: col1.height
+            boundsBehavior: Flickable.StopAtBounds
+            ScrollBar.vertical: ScrollBar { }
+            ScrollBar.background: Rectangle{color: 'red'}
             Column{
+                id: col1
+                anchors.centerIn: parent
                 spacing: app.fs
-                anchors.horizontalCenter: parent.horizontalCenter
-                Row{
-                    spacing: app.fs
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    Text{
-                        text:'Volume: '
-                        font.pixelSize: app.fs
-                        color: 'white'
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-                    SpinBox{
-                        id: sbVolume
-                        from: 0
-                        to:100
-                        value: 0
-                        font.pixelSize: app.fs
-                        width: app.fs*10
-                        height: app.fs*3
-                        onValueChanged: {
-                            unik.setTtsVolume(value)
-                            appSettings.volume = value
-                        }
-                    }
-                }
-                Item{width: app.fs; height: 1}
-                Row{
-                    spacing: app.fs
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    Text{
-                        text:'Rate: '
-                        font.pixelSize: app.fs
-                        color: 'white'
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-                    SpinBox{
-                        id: sbRate
-                        from: -10
-                        to:10
-                        value: 0
-                        font.pixelSize: app.fs
-                        width: app.fs*10
-                        height: app.fs*3
-                        onValueChanged: {
-                            unik.setTtsRate(value)
-                            appSettings.rate = value
-                        }
-                    }
-                }
-                Item{width: app.fs; height: 1}
-                Row{
-                    spacing: app.fs
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    Text{
-                        text:'Pitch: '
-                        font.pixelSize: app.fs
-                        color: 'white'
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-                    SpinBox{
-                        id: sbPitch
-                        from: -10
-                        to:10
-                        value: 0
-                        font.pixelSize: app.fs
-                        width: app.fs*10
-                        height: app.fs*3
-                        onValueChanged: {
-                            unik.setTtsPitch(value)
-                            appSettings.pitch = value
-                        }
-                    }
-                }
-            }
-            Row{
-                anchors.horizontalCenter: parent.horizontalCenter
                 Text{
-                    id: labelCbLocales
-                    text:'Lenguaje: '
+                    text:'<b>Unik Android Text2Voice Example</b>'
+                    font.pixelSize: app.fs*1.2
+                    color: 'white'
+                    anchors.horizontalCenter: parent.horizontalCenter
+                }
+                Item{width: 1; height: app.fs*2}
+                Row{
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    Text{
+                        id: labelCbEngines
+                        text:'Engines: '
+                        font.pixelSize: app.fs
+                        color: 'white'
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+                    ComboBox{
+                        id: cbEngines
+                        width: xApp.width-labelCbEngines.width-48
+                        font.pixelSize: app.fs
+                        height: app.fs*3
+                        model: (''+ttsEngines).split(',')
+                        onCurrentIndexChanged: {
+                            appSettings.engine= currentIndex
+                            unik.ttsEngineSelected(currentIndex)
+                        }
+                    }
+                }
+                Text{
+                    text:(ttsCurrentVoice!==''?'Voz Actual: '+ttsCurrentVoice:'Sin voces disponibles. ')+(ttsCurrentVoice!==''?' Voces Disponibles: '+ttsVoices:'')
                     font.pixelSize: app.fs
                     color: 'white'
-                    anchors.verticalCenter: parent.verticalCenter
                 }
-                ComboBox{
-                    id: cbLanguajes
-                    width: xApp.width-labelCbLocales.width-48
-                    font.pixelSize: app.fs
-                    height: app.fs*3
-                    model: (''+ttsLocales).split(',')
-                    onCurrentIndexChanged: {
-                        appSettings.voice= currentIndex
-                        unik.ttsLanguageSelected(currentIndex)
+                Column{
+                    spacing: app.fs
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    Row{
+                        spacing: app.fs
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        Text{
+                            text:'Volume: '
+                            font.pixelSize: app.fs
+                            color: 'white'
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
+                        SpinBox{
+                            id: sbVolume
+                            from: 0
+                            to:100
+                            value: 0
+                            font.pixelSize: app.fs
+                            width: app.fs*10
+                            height: app.fs*3
+                            onValueChanged: {
+                                unik.setTtsVolume(value)
+                                appSettings.volume = value
+                            }
+                        }
+                    }
+                    Item{width: app.fs; height: 1}
+                    Row{
+                        spacing: app.fs
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        Text{
+                            text:'Rate: '
+                            font.pixelSize: app.fs
+                            color: 'white'
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
+                        SpinBox{
+                            id: sbRate
+                            from: -10
+                            to:10
+                            value: 0
+                            font.pixelSize: app.fs
+                            width: app.fs*10
+                            height: app.fs*3
+                            onValueChanged: {
+                                unik.setTtsRate(value)
+                                appSettings.rate = value
+                            }
+                        }
+                    }
+                    Item{width: app.fs; height: 1}
+                    Row{
+                        spacing: app.fs
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        Text{
+                            text:'Pitch: '
+                            font.pixelSize: app.fs
+                            color: 'white'
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
+                        SpinBox{
+                            id: sbPitch
+                            from: -10
+                            to:10
+                            value: 0
+                            font.pixelSize: app.fs
+                            width: app.fs*10
+                            height: app.fs*3
+                            onValueChanged: {
+                                unik.setTtsPitch(value)
+                                appSettings.pitch = value
+                            }
+                        }
                     }
                 }
-            }
-            Text{
-                text:'Escribir un texto'
-                font.pixelSize: app.fs
-                color: 'white'
-            }
-            TextField{
-                id: ti
-                font.pixelSize: app.fs
-                width: xApp.width
-                height: app.fs*2
-                onFocusChanged: if(focus && !unik.isTtsSpeaking())runVoice('Escribir aquí un texto y presionar la tecla Enter')
-                KeyNavigation.tab: btnSpeak
-                Keys.onReturnPressed: {
-                    unik.speak(ti.text)
-                    textSpeaked.text=ti.text
+                Row{
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    Text{
+                        id: labelCbLocales
+                        text:'Lenguaje: '
+                        font.pixelSize: app.fs
+                        color: 'white'
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+                    ComboBox{
+                        id: cbLanguajes
+                        width: xApp.width-labelCbLocales.width-48
+                        font.pixelSize: app.fs
+                        height: app.fs*3
+                        model: (''+ttsLocales).split(',')
+                        onCurrentIndexChanged: {
+                            appSettings.voice= currentIndex
+                            unik.ttsLanguageSelected(currentIndex)
+                        }
+                    }
+                }
+                Text{
+                    text:'Escribir un texto'
+                    font.pixelSize: app.fs
+                    color: 'white'
+                }
+                TextField{
+                    id: ti
+                    font.pixelSize: app.fs
+                    width: xApp.width
+                    height: app.fs*2
+                    onFocusChanged: if(focus && !unik.isTtsSpeaking())runVoice('Escribir aquí un texto y presionar la tecla Enter')
+                    KeyNavigation.tab: btnSpeak
+                    Keys.onReturnPressed: {
+                        unik.speak(ti.text)
+                        textSpeaked.text=ti.text
+                    }
+                    Rectangle{
+                        width: parent.width+app.fs*0.25
+                        height: parent.height+app.fs*0.25
+                        color: 'transparent'
+                        border.width: parent.focus?app.fs*0.5:0
+                        border.color: "#ff8833"
+                        anchors.centerIn: parent
+                    }
+                }
+                Row{
+                    spacing: app.fs
+                    Button{
+                        id:btnSpeak
+                        text: 'Hablar'
+                        font.pixelSize: app.fs
+                        width: app.fs*8
+                        height: app.fs*3
+                        onFocusChanged: {
+                            if(focus&&ti.text!==''&&!unik.isTtsSpeaking()&&!unik.isTtsPaused())runVoice('Hacer click en este boton para hablar')
+                            if(focus&&ti.text===''&&!unik.isTtsSpeaking()&&!unik.isTtsPaused())runVoice('El campo de texto esta vacio, ingrese un texto para poder convertirlo a voz.')
+                        }
+                        KeyNavigation.tab: btnSpeakStop
+                        onClicked: {
+                            if(ti.text!==''){
+                                unik.speak(ti.text)
+                            }else{
+                                unik.speak('El campo de texto esta vacio, ingrese un texto para poder convertirlo a voz.')
+                            }
+
+                            textSpeaked.text=ti.text
+                        }
+                        Rectangle{
+                            width: parent.width+app.fs*0.25
+                            height: parent.height+app.fs*0.25
+                            color: 'transparent'
+                            border.width: parent.focus?app.fs*0.25:0
+                            border.color: "#ff8833"
+                            anchors.centerIn: parent
+                        }
+                    }
+                    Button{
+                        id:btnSpeakPauseResume
+                        enabled: false
+                        visible: Qt.platform.os!='linux'
+                        text: 'Pausar'
+                        font.pixelSize: app.fs
+                        width: app.fs*8
+                        height: app.fs*3
+                        KeyNavigation.tab: row.children[0]
+                        onClicked: {
+                            if(unik.isTtsPaused()){
+                                textSpeaked.text='<b>Continua: </b>'+ti.text
+                                unik.ttsResume()
+                            }else{
+                                textSpeaked.text='<b>Pausado: </b>'+ti.text
+                                if(unik.isTtsSpeaking()){
+                                    unik.ttsPause()
+                                }
+                            }
+                        }
+                        Rectangle{
+                            width: parent.width+app.fs*0.25
+                            height: parent.height+app.fs*0.25
+                            color: 'transparent'
+                            border.width: parent.focus?app.fs*0.25:0
+                            border.color: "#ff8833"
+                            anchors.centerIn: parent
+                        }
+                    }
+                    Button{
+                        id:btnSpeakStop
+                        enabled: false
+                        text: 'Detener'
+                        font.pixelSize: app.fs
+                        width: app.fs*8
+                        height: app.fs*3
+                        KeyNavigation.tab: row.children[0]
+                        onClicked: {
+                            unik.ttsSpeakStop()
+                            textSpeaked.text=ti.text
+                        }
+                        Rectangle{
+                            width: parent.width+app.fs*0.25
+                            height: parent.height+app.fs*0.25
+                            color: 'transparent'
+                            border.width: parent.focus?app.fs*0.25:0
+                            border.color: "#ff8833"
+                            anchors.centerIn: parent
+                        }
+                    }
+                }
+
+                Text{
+                    text:'Detectar elemento'
+                    font.pixelSize: app.fs
+                    color: 'white'
+                }
+                Row{
+                    id:row
+                    spacing: 10
+                    Repeater{
+                        id:rep
+                        model:['red', 'yellow', 'blue', 'brown', 'pink']
+                        property var a: ['rojo', 'amarillo', 'azul', 'marron', 'rosado']
+                        Rectangle{
+                            width: app.fs*4
+                            height: width
+                            color: modelData
+                            border.width: focus?app.fs*0.5:0
+                            border.color: "#ff8833"
+                            objectName: 'rect'+index
+                            KeyNavigation.tab: index===3?row.children[5]: index===4?ti:row.children[index+1]
+                            onFocusChanged: if(focus && !unik.isTtsSpeaking())runVoice('Sobre el color '+rep.a[index])
+                            MouseArea{
+                                anchors.fill: parent
+                                hoverEnabled: true
+                                onEntered: {
+                                    runVoice('Sobre el color '+rep.a[index])
+                                    parent.focus=true
+                                }
+                                onClicked: {
+                                    runVoice('Sobre el color '+rep.a[index])
+                                    parent.focus=true
+                                }
+                            }
+                        }
+                    }
+                }
+                Item{
+                    width: 1
+                    height: app.fs*2
+                }
+                Text{
+                    text:'Último texto reproducido'
+                    font.pixelSize: app.fs
+                    color: 'white'
                 }
                 Rectangle{
-                    width: parent.width+app.fs*0.5
-                    height: parent.height+app.fs*0.5
-                    color: 'transparent'
-                    border.width: parent.focus?app.fs*0.5:0
-                    border.color: "#ff8833"
-                    anchors.centerIn: parent
-                }
-            }
-            Row{
-                spacing: app.fs
-                Button{
-                    id:btnSpeak
-                    text: 'Hablar'
-                    font.pixelSize: app.fs
-                    width: app.fs*8
-                    height: app.fs*3
-                    onFocusChanged: {
-                        if(focus&&ti.text!==''&&!unik.isTtsSpeaking()&&!unik.isTtsPaused())runVoice('Hacer click en este boton para hablar')
-                        if(focus&&ti.text===''&&!unik.isTtsSpeaking()&&!unik.isTtsPaused())runVoice('El campo de texto esta vacio, ingrese un texto para poder convertirlo a voz.')
-                    }
-                    KeyNavigation.tab: btnSpeakStop
-                    onClicked: {
-                        if(ti.text!==''){
-                            unik.speak(ti.text)
-                        }else{
-                            unik.speak('El campo de texto esta vacio, ingrese un texto para poder convertirlo a voz.')
-                        }
-
-                        textSpeaked.text=ti.text
-                    }
-                    Rectangle{
-                        width: parent.width+app.fs*0.25
-                        height: parent.height+app.fs*0.25
-                        color: 'transparent'
-                        border.width: parent.focus?app.fs*0.25:0
-                        border.color: "#ff8833"
-                        anchors.centerIn: parent
-                    }
-                }
-                Button{
-                    id:btnSpeakPauseResume
-                    enabled: false
-                    visible: Qt.platform.os!='linux'
-                    text: 'Pausar'
-                    font.pixelSize: app.fs
-                    width: app.fs*8
-                    height: app.fs*3
-                    KeyNavigation.tab: row.children[0]
-                    onClicked: {
-                        console.log('isTtsSpeaking(): '+unik.isTtsSpeaking())
-                        if(unik.isTtsPaused()){
-                            textSpeaked.text='<b>Continua: </b>'+ti.text
-                            unik.ttsResume()
-                        }else{
-                            textSpeaked.text='<b>Pausado: </b>'+ti.text
-                            if(unik.isTtsSpeaking()){
-                                unik.ttsPause()
-                            }
-                        }
-                    }
-                    Rectangle{
-                        width: parent.width+app.fs*0.25
-                        height: parent.height+app.fs*0.25
-                        color: 'transparent'
-                        border.width: parent.focus?app.fs*0.25:0
-                        border.color: "#ff8833"
-                        anchors.centerIn: parent
-                    }
-                }
-                Button{
-                    id:btnSpeakStop
-                    enabled: false
-                    text: 'Detener'
-                    font.pixelSize: app.fs
-                    width: app.fs*8
-                    height: app.fs*3
-                    KeyNavigation.tab: row.children[0]
-                    onClicked: {
-                        unik.ttsSpeakStop()
-                        enabled = false
-                        textSpeaked.text=ti.text
-                    }
-                    Rectangle{
-                        width: parent.width+app.fs*0.25
-                        height: parent.height+app.fs*0.25
-                        color: 'transparent'
-                        border.width: parent.focus?app.fs*0.25:0
-                        border.color: "#ff8833"
-                        anchors.centerIn: parent
+                    width: xApp.width
+                    height: xApp.height*0.3
+                    Text{
+                        id: textSpeaked
+                        font.pixelSize: app.fs
+                        width: parent.width-app.fs
+                        wrapMode: Text.WordWrap
+                        anchors.top: parent.top
+                        anchors.topMargin: app.fs
+                        anchors.left: parent.left
+                        anchors.leftMargin: app.fs
                     }
                 }
             }
-
-            Text{
-                text:'Detectar elemento'
-                font.pixelSize: app.fs
-                color: 'white'
-            }
-            Row{
-                id:row
-                spacing: 10
-                Repeater{
-                    id:rep
-                    model:['red', 'yellow', 'blue', 'brown', 'pink']
-                    property var a: ['rojo', 'amarillo', 'azul', 'marron', 'rosado']
-                    Rectangle{
-                        width: app.fs*4
-                        height: width
-                        color: modelData
-                        border.width: focus?app.fs*0.5:0
-                        border.color: "#ff8833"
-                        objectName: 'rect'+index
-                        KeyNavigation.tab: index===3?row.children[5]: index===4?ti:row.children[index+1]
-                        onFocusChanged: if(focus && !unik.isTtsSpeaking())runVoice('Sobre el color '+rep.a[index])
-                        MouseArea{
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            onEntered: {
-                                runVoice('Sobre el color '+rep.a[index])
-                                parent.focus=true
-                            }
-                            onClicked: {
-                                runVoice('Sobre el color '+rep.a[index])
-                                parent.focus=true
-                            }
-                        }
-                    }
-                }
-            }
-            Item{
-                width: 1
-                height: app.fs*2
-            }
-            Text{
-                text:'Último texto reproducido'
-                font.pixelSize: app.fs
-                color: 'white'
-            }
-            Rectangle{
-                width: xApp.width
-                height: xApp.height*0.3
-                Text{
-                    id: textSpeaked
-                    font.pixelSize: app.fs
-                    width: parent.width-app.fs
-                    wrapMode: Text.WordWrap
-                    anchors.top: parent.top
-                    anchors.topMargin: app.fs
-                    anchors.left: parent.left
-                    anchors.leftMargin: app.fs
-                }
-            }
+            Component.onCompleted: ti.focus=true
         }
-        Component.onCompleted: ti.focus=true
-    }
     }
 
     Shortcut{
