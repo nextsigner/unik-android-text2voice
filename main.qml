@@ -10,8 +10,8 @@ import unik.UnikQProcess 1.0
 ApplicationWindow{
     id:app
     visibility:"Windowed"//"Maximized"
-    width: 500
-    height: 800
+    width: 700
+    height: 900
     color: '#333'
     property int fs: app.width*0.02
     Settings{
@@ -29,12 +29,18 @@ ApplicationWindow{
             btnSpeakStop.enabled = false
             if(unik.ttsSpeaking===0){
                 btnSpeakStop.enabled = false
+                btnSpeakPauseResume.enabled = false
             }else if(unik.ttsSpeaking===1){
                 btnSpeakStop.enabled = true
+                btnSpeakPauseResume.text = 'Pausar'
+                btnSpeakPauseResume.enabled = true
             }else if(unik.ttsSpeaking===2){
                 btnSpeakStop.enabled = true
+                btnSpeakPauseResume.text = 'Continuar'
+                btnSpeakPauseResume.enabled = true
             }else{
                 btnSpeakStop.enabled = false
+                btnSpeakPauseResume.enabled = false
             }
         }
     }
@@ -179,7 +185,7 @@ ApplicationWindow{
                 font.pixelSize: app.fs
                 width: xApp.width
                 height: app.fs*2
-                onFocusChanged: if(focus)runVoice('Escribir aquí un texto y presionar la tecla Enter')
+                onFocusChanged: if(focus && !unik.isTssSpeaking())runVoice('Escribir aquí un texto y presionar la tecla Enter')
                 KeyNavigation.tab: btnSpeak
                 Keys.onReturnPressed: {
                     unik.speak(ti.text)
@@ -218,6 +224,31 @@ ApplicationWindow{
                         border.width: parent.focus?10:0
                         border.color: "#ff8833"
                         anchors.centerIn: parent
+                    }
+                    Rectangle{
+                        width: parent.width+app.fs*0.25
+                        height: parent.height+app.fs*0.25
+                        color: 'transparent'
+                        border.width: parent.focus?app.fs*0.25:0
+                        border.color: "#ff8833"
+                        anchors.centerIn: parent
+                    }
+                }
+                Button{
+                    id:btnSpeakPauseResume
+                    enabled: false
+                    text: 'Pausar'
+                    font.pixelSize: app.fs
+                    width: app.fs*8
+                    height: app.fs*3
+                    KeyNavigation.tab: row.children[0]
+                    onClicked: {
+                        if(text==='Pausar'){
+                            unik.ttsResume()
+                        }else{
+                            unik.ttsPause()
+                        }
+                        textSpeaked.text=ti.text
                     }
                     Rectangle{
                         width: parent.width+app.fs*0.25
@@ -272,7 +303,7 @@ ApplicationWindow{
                         border.color: "#ff8833"
                         objectName: 'rect'+index
                         KeyNavigation.tab: index===3?row.children[5]: index===4?ti:row.children[index+1]
-                        onFocusChanged: if(focus)runVoice('Sobre el color '+rep.a[index])
+                        onFocusChanged: if(focus && !unik.isTssSpeaking())runVoice('Sobre el color '+rep.a[index])
                         MouseArea{
                             anchors.fill: parent
                             hoverEnabled: true
