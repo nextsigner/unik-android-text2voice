@@ -66,7 +66,7 @@ ApplicationWindow{
             spacing: app.fs
             Text{
                 text:'<b>Unik Android Text2Voice Example</b>'
-                font.pixelSize: app.fs*2
+                font.pixelSize: app.fs*1.2
                 color: 'white'
                 anchors.horizontalCenter: parent.horizontalCenter
             }
