@@ -15,6 +15,29 @@ ApplicationWindow{
     height: Qt.platform.os==='android'?Screen.height:900
     color: '#333'
     property int fs: Qt.platform.os==='android'?app.width*0.04:app.width*0.03
+    property color c1
+    property color c2
+    property color c3
+    property color c4
+
+    UnikSettings{
+        id: unikSettings
+        property color c1
+        property color c2
+        property color c3
+        property color c4
+        //url: './cfg.json'
+        Component.onCompleted: {
+            unikSettings.currentNumColor=0
+            var tcs=unikSettings.defaultColors.split('|')
+            var c=tcs[unikSettings.currentNumColor].split('-')
+            app.c1=c[0]
+            app.c2=c[1]
+            app.c3=c[2]
+            app.c4=c[3]
+        }
+    }
+
     Settings{
         id:appSettings
         category: 'UnikTtsExample'
@@ -228,7 +251,6 @@ ApplicationWindow{
                         width: app.fs*8
                         height: app.fs*3
                         onFocusChanged: {
-                            timerSpeak.stop()
                             if(focus&&ti.text!==''&&!unik.isTtsSpeaking()&&!unik.isTtsPaused())speak('Hacer click en este boton para hablar')
                             if(focus&&ti.text===''&&!unik.isTtsSpeaking()&&!unik.isTtsPaused())speak('El campo de texto esta vacio, ingrese un texto para poder convertirlo a voz.')
                         }
@@ -366,7 +388,7 @@ ApplicationWindow{
             Component.onCompleted: ti.focus=true
         }
     }
-
+    UWarnings{}
     Shortcut{
         sequence: 'Esc'
         onActivated: Qt.quit()
