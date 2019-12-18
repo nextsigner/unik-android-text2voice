@@ -5,13 +5,14 @@
 
 import QtQuick 2.12
 import QtQuick.Controls 2.0
+import QtQuick.Window 2.0
 import Qt.labs.settings 1.0
 import unik.UnikQProcess 1.0
 ApplicationWindow{
     id:app
-    visibility:"Windowed"//"Maximized"
-    width: 700
-    height: 900
+    visibility:Qt.platform.os==='android'?"FullScreen":"Windowed"
+    width: Qt.platform.os==='android'?Screen.width:700
+    height: Qt.platform.os==='android'?Screen.height:900
     color: '#333'
     property int fs: app.width*0.02
     Settings{
