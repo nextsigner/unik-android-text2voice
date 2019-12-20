@@ -21,6 +21,11 @@ ApplicationWindow{
     property color c3
     property color c4
 
+    onClosing: {
+        close.accepted = true
+        Qt.quit()
+    }
+
     UnikSettings{
         id: unikSettings
         property color c1
