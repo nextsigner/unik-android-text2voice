@@ -10,6 +10,7 @@ import Qt.labs.settings 1.0
 import unik.UnikQProcess 1.0
 ApplicationWindow{
     id:app
+    visible: true
     visibility:Qt.platform.os==='android'?"FullScreen":"Windowed"
     width: Qt.platform.os==='android'?Screen.width:500
     height: Qt.platform.os==='android'?Screen.height:900
